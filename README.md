@@ -4,10 +4,10 @@ Gin Handle Error Middleware
 
 Gin Handle Error Middleware is one middleware for [Gin](https://github.com/gin-gonic/gin) framework that you could handle errors in middleware, so you could NOT do error handling within each handler.
 
-Usage
+Installation
 -----
 
-Download and install without using go module:
+Download and install using go module:
 
 ```shell
 go get github.com/richzw/gin-error
@@ -25,6 +25,10 @@ Example
 - Map error to one status code
 
 ```go
+import (
+    "github.com/richzw/gin-error"
+    "github.com/gin-gonic/gin"
+)
 var BadRequestErr = fmt.Errorf("bad request error")
 
 func main() {
@@ -42,6 +46,10 @@ func main() {
 - Map error to the response
 
 ```go
+import (
+    "github.com/richzw/gin-error"
+    "github.com/gin-gonic/gin"
+)
 var BadRequestErr = fmt.Errorf("bad request error")
 
 func main() {
