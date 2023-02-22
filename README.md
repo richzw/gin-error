@@ -10,13 +10,13 @@ Usage
 Download and install without using go module:
 
 ```shell
-go get github.com:richzw/gin-error
+go get github.com/richzw/gin-error
 ```
 
 Import it in your code:
 
 ```shell
-import "github.com:richzw/gin-error"
+import "github.com/richzw/gin-error"
 ```
 
 Example
@@ -29,7 +29,7 @@ var BadRequestErr = fmt.Errorf("bad request error")
 
 func main() {
     r := gin.Default()
-    r.Use(Error(NewErrMap(BadRequestErr).StatusCode(http.StatusBadRequest)))
+    r.Use(err.Error(err.NewErrMap(BadRequestErr).StatusCode(http.StatusBadRequest)))
 
     r.GET("/test", func(c *gin.Context) {
         c.Error(BadRequestErr)
@@ -46,8 +46,8 @@ var BadRequestErr = fmt.Errorf("bad request error")
 
 func main() {
     r := gin.Default()
-    r.Use(Error(
-        NewErrMap(BadRequestErr).Response(func(c *gin.Context) {
+    r.Use(err.Error(
+        err.NewErrMap(BadRequestErr).Response(func(c *gin.Context) {
             c.JSON(http.StatusBadRequest, gin.H{"error": BadRequestErr.Error()})
         })))
 

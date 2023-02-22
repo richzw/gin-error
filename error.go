@@ -1,4 +1,4 @@
-package gin_error
+package err
 
 import (
 	"errors"
