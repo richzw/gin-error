@@ -60,7 +60,7 @@ func main() {
         })))
 
     r.GET("/test", func(c *gin.Context) {
-        c.Error(NotFoundError)
+        c.Error(BadRequestErr)
     })
 
     r.Run()
