@@ -16,7 +16,7 @@ func Error(errM ...*ErrorMap) gin.HandlerFunc {
 
 		for _, err := range errM {
 			for _, e := range err.errors {
-				if e == lastError.Err || errors.Is(e, lastError.Err) {
+				if e == lastError.Err || errors.Is(lastError.Err, e) {
 					err.response(c)
 				}
 			}
