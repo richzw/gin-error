@@ -27,6 +27,22 @@ func TestErrToStatusCode(t *testing.T) {
 	}
 }
 
+// TestWrappedErrToStatusCode ensures that the middleware also works with wrapped errors.
+func TestWrappedErrToStatusCode(t *testing.T) {
+	r := gin.Default()
+	r.Use(Error(NewErrMap(BadRequestErr).StatusCode(http.StatusBadRequest)))
+	r.GET("/test", func(c *gin.Context) {
+		_ = c.Error(fmt.Errorf("%w: this is a wrapped error", BadRequestErr))
+	})
+
+	recorder := httptest.NewRecorder()
+	r.ServeHTTP(recorder, httptest.NewRequest("GET", "/test", nil))
+
+	if recorder.Result().StatusCode != http.StatusBadRequest {
+		t.Errorf("invalid the status code %+v", recorder.Result().StatusCode)
+	}
+}
+
 func TestErrToResponse(t *testing.T) {
 	r := gin.Default()
 	r.Use(Error(
