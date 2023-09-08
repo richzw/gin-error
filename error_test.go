@@ -80,3 +80,21 @@ func TestErrToResponse(t *testing.T) {
 		t.Errorf("invalid the response body %+v", rsp.Error)
 	}
 }
+
+func TestErrorMap_matchError(t *testing.T) {
+	t.Run("single error", func(t *testing.T) {
+		em := NewErrMap(BadRequestErr)
+		err := BadRequestErr
+		if em.matchError(err) == false {
+			t.Errorf("error should match")
+		}
+	})
+
+	t.Run("wrapped error", func(t *testing.T) {
+		em := NewErrMap(BadRequestErr)
+		err := fmt.Errorf("%w: Details about this error", BadRequestErr)
+		if em.matchError(err) == false {
+			t.Errorf("error should match")
+		}
+	})
+}
