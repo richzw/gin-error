@@ -67,4 +67,6 @@ func main() {
 }
 ```
 
+# License
 
+Gin Handle Error Middleware is licensed under the MIT.
