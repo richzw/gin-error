@@ -44,7 +44,7 @@ func (e *ErrorMap) Response(response func(c *gin.Context)) *ErrorMap {
 
 func (e *ErrorMap) matchError(actual error) bool {
 	for _, expected := range e.errors {
-		if expected == actual || errors.Is(actual, expected) {
+		if errors.Is(actual, expected) || errors.Is(expected, actual) {
 			return true
 		}
 	}
