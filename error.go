@@ -15,10 +15,8 @@ func Error(errM ...*ErrorMap) gin.HandlerFunc {
 		}
 
 		for _, err := range errM {
-			for _, e := range err.errors {
-				if e == lastError.Err || errors.Is(lastError.Err, e) {
-					err.response(c)
-				}
+			if err.matchError(lastError.Err) {
+				err.response(c)
 			}
 		}
 	}
@@ -42,6 +40,15 @@ func (e *ErrorMap) StatusCode(statusCode int) *ErrorMap {
 func (e *ErrorMap) Response(response func(c *gin.Context)) *ErrorMap {
 	e.response = response
 	return e
+}
+
+func (e *ErrorMap) matchError(actual error) bool {
+	for _, expected := range e.errors {
+		if expected == actual || errors.Is(actual, expected) {
+			return true
+		}
+	}
+	return false
 }
 
 func NewErrMap(err ...error) *ErrorMap {
